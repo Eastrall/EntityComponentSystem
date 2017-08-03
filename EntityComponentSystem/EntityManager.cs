@@ -1,14 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EntityComponentSystem
 {
-    public static class EntityManager
+    public class EntityManager
     {
-        public static T CreateEntity<T>() where T : IEntity, new()
+        private readonly Dictionary<Guid, Entity> _entities;
+
+        public IEnumerable<Entity> Entites => this._entities.Values;
+
+        public Entity this[Guid id] => this._entities[id];
+
+        public EntityManager()
         {
-            return new T();
+            this._entities = new Dictionary<Guid, Entity>();
+        }
+
+        public Entity CreateEntity()
+        {
+            var newEntity = new Entity();
+
+            this._entities.Add(newEntity.Id, newEntity);
+
+            return newEntity;
+        }
+
+        public void DeleteEntity(Guid id)
+        {
+            this._entities.Remove(id);
         }
     }
 }

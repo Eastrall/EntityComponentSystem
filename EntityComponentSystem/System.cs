@@ -1,17 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace EntityComponentSystem
 {
-    public class MoveSystem : System
-    {
-        public override void Update(float tick)
-        {
-
-        }
-    }
-
     public abstract class System
     {
-        public abstract void Update(float tick);
+        private readonly EntityManager _entityManager;
+
+        protected EntityManager EntityManager => this._entityManager;
+
+        protected System(EntityManager entityManager)
+        {
+            this._entityManager = entityManager;
+        }
+
+        public abstract void Update();
+    }
+
+    public sealed class MoveSystem : System
+    {
+        public MoveSystem(EntityManager entityManager) 
+            : base(entityManager)
+        {
+        }
+
+        public override void Update()
+        {
+            
+        }
     }
 }
